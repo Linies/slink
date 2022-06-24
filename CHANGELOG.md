@@ -1,3 +1,7 @@
-## 0.0.1
+## 1.0.0
 
-* TODO: Describe initial release.
+feature
+
+## 1.0.1
+
+fix: is directory exits
