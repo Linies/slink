@@ -30,7 +30,7 @@ Future<void> runLink(Link2Src link2from, String root) async {
     if (Directory(to).existsSync()) {
       // 删除原来的
       print('存在文件路径: \'$to\' 开始替换');
-      Directory(to).deleteSync();
+      Directory(to).deleteSync(recursive: true);
     }
   } else {
     // 文件
