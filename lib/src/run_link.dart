@@ -20,27 +20,35 @@ Future<void> runLink(Link2Src link2from, String root) async {
       Uri.file('$root${link2from.to}').toFilePath(windows: Platform.isWindows);
   // 判断是文件夹还是文件
   bool isDirectory = FileSystemEntity.isDirectorySync(src);
-  print("开始替换 PATH:$src");
-  print("是否文件夹:$isDirectory ,path:$src");
+  print("start replace path: $src");
+  print("is directory: $isDirectory, path:$src");
   if (isDirectory) {
     // 文件夹
     if (!Directory(src).existsSync()) {
-      print('路径不存在: \'$src\' \n');
+      print('directory is no exists: \'$src\' \n');
     }
     if (Directory(to).existsSync()) {
       // 删除原来的
-      print('存在文件路径: \'$to\' 开始替换');
+      print('directory is exists: \'$to\'');
       Directory(to).deleteSync(recursive: true);
+    } else if (FileSystemEntity.isLinkSync(to)) {
+      // 删除原来的软连接
+      print('sort link path: \'$to\'');
+      File(to).deleteSync(recursive: true);
     }
   } else {
     // 文件
     if (!File(src).existsSync()) {
-      print('路径不存在: \'$src\'');
+      print('file is no exists: \'$src\'');
     }
     if (File(to).existsSync()) {
       // 删除原来的
-      print('存在文件路径: \'$to\' 开始替换');
+      print('file is exists:: \'$to\'');
       File(to).deleteSync();
+    } else if (FileSystemEntity.isLinkSync(to)) {
+      // 删除原来的软连接
+      print('sort link path: \'$to\'');
+      File(to).deleteSync(recursive: true);
     }
   }
   print('\n');
